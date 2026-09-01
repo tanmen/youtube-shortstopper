@@ -1,0 +1,293 @@
+/* popup.html と options.html で共有するスタイル */
+
+:root {
+  --bg: #ffffff;
+  --fg: #16181c;
+  --muted: #62676e;
+  --line: #e3e6ea;
+  --surface: #f5f6f8;
+  --accent: #cc3b30;
+  --warn: #a35a00;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --fg: #eceef1;
+    --muted: #9aa1a9;
+    --line: #2a2e35;
+    --surface: #1c1f25;
+    --accent: #ff6a5e;
+    --warn: #ffb051;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+body.popup {
+  width: 300px;
+  padding: 16px;
+}
+
+body.options {
+  padding: 40px 20px 80px;
+}
+
+.sheet {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------- 見出し */
+
+.head h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.options .head h1 {
+  font-size: 20px;
+}
+
+.head-sub {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.options .head-sub {
+  font-size: 12.5px;
+  margin-top: 8px;
+}
+
+code {
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: var(--surface);
+  font-size: 0.94em;
+}
+
+/* --------------------------------------------------- 本数 */
+
+.count {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  text-align: center;
+}
+
+.count-num {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.count-label {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.count-note {
+  margin-top: 6px;
+  color: var(--warn);
+  font-size: 11px;
+  min-height: 1em;
+}
+
+/* --------------------------------------------------- 行 */
+
+.rows {
+  margin: 20px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+.row + .row {
+  border-top: 1px solid var(--line);
+}
+
+.row-block {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row-body {
+  display: block;
+  flex: 1;
+}
+
+.row-title {
+  display: block;
+  font-weight: 600;
+}
+
+.row-note {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.row input[type='checkbox'] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.select {
+  flex: none;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.slider input[type='range'] {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+.slider output {
+  flex: none;
+  min-width: 5.5em;
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* --------------------------------------------------- 一時解除 */
+
+.snooze {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.snooze-state {
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.snooze-state.is-off {
+  color: var(--warn);
+}
+
+.snooze-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.snooze-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* --------------------------------------------------- 部品 */
+
+.btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--muted);
+}
+
+.btn-quiet {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 11.5px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--fg);
+}
+
+.foot {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.stats-line {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats .btn {
+  flex: none;
+}
+
+.saved {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 11.5px;
+  text-align: right;
+}

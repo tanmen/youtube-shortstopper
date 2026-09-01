@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>YouTube ShortStopper</title>
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body class="popup">
+    <header class="head">
+      <h1>ShortStopper</h1>
+      <p class="head-sub">Shorts のループと自動スクロールだけを止めています</p>
+    </header>
+
+    <section class="count">
+      <div class="count-num" id="count">0</div>
+      <div class="count-label">今日見た Shorts</div>
+      <div class="count-note" id="countNote"></div>
+    </section>
+
+    <section class="snooze">
+      <p class="snooze-state" id="snoozeState">制御は有効です</p>
+      <div class="snooze-actions">
+        <button type="button" class="btn" id="snooze15">15 分だけ解除</button>
+        <button type="button" class="btn btn-quiet" id="unsnooze" hidden>いま戻す</button>
+      </div>
+      <p class="snooze-note">
+        どうしても見たいときはここから。時間が来ると自動で元に戻るので、切りっぱなしになりません。
+      </p>
+    </section>
+
+    <footer class="foot">
+      <button type="button" class="link" id="openOptions">詳しい設定</button>
+    </footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

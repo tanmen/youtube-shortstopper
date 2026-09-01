@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>YouTube ShortStopper の設定</title>
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body class="options">
+    <main class="sheet">
+      <header class="head">
+        <h1>YouTube ShortStopper</h1>
+        <p class="head-sub">
+          触るのは <code>youtube.com/shorts/</code> のページだけです。通常の動画・再生リスト・
+          YouTube Music には手を入れないので、ラジオ代わりの再生はそのまま使えます。
+        </p>
+      </header>
+
+      <section class="rows">
+        <label class="row">
+          <span class="row-body">
+            <span class="row-title">スクロールでの移動を止める</span>
+            <span class="row-note">
+              ホイール・スワイプ・上下キーで次の Shorts に進まなくなります。コメント欄や
+              メニューのスクロールはそのままです。
+            </span>
+          </span>
+          <input type="checkbox" id="blockScroll" />
+        </label>
+
+        <label class="row">
+          <span class="row-body">
+            <span class="row-title">ループと自動送りを止める</span>
+            <span class="row-note">
+              最後まで再生したらそこで停止します。もう一度見るか、次へ進むかを選べます。
+            </span>
+          </span>
+          <input type="checkbox" id="breakLoop" />
+        </label>
+
+        <label class="row">
+          <span class="row-body">
+            <span class="row-title">「制限中」ポップアップの位置</span>
+            <span class="row-note">
+              スクロールやキーで進もうとしたときに出る大きな表示。既定は右下（右上は
+              YouTube のヘッダーと重なりやすい）。
+            </span>
+          </span>
+          <select id="noticeCorner" class="select">
+            <option value="br">右下</option>
+            <option value="tr">右上</option>
+          </select>
+        </label>
+
+        <label class="row row-block">
+          <span class="row-body">
+            <span class="row-title">「次へ進む」が押せるまでの待ち時間</span>
+            <span class="row-note">
+              止まってから、この秒数だけボタンを押せなくします。0 にすると待ちなしです。
+            </span>
+          </span>
+          <span class="slider">
+            <input type="range" id="cooldownSec" min="0" max="30" step="1" />
+            <output id="cooldownOut"></output>
+          </span>
+        </label>
+
+        <label class="row row-block">
+          <span class="row-body">
+            <span class="row-title">何本ごとに声をかけるか</span>
+            <span class="row-note">
+              この本数ごとに、停止カードで今日の本数を強調します。0 にすると出しません。
+            </span>
+          </span>
+          <span class="slider">
+            <input type="range" id="nudgeEvery" min="0" max="30" step="1" />
+            <output id="nudgeOut"></output>
+          </span>
+        </label>
+      </section>
+
+      <section class="stats">
+        <p class="stats-line" id="statsLine">今日見た Shorts: 0 本</p>
+        <button type="button" class="btn btn-quiet" id="resetCount">今日の本数をリセット</button>
+      </section>
+
+      <p class="saved" id="saved" hidden>保存しました</p>
+    </main>
+
+    <script src="options.js"></script>
+  </body>
+</html>

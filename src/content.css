@@ -1,0 +1,292 @@
+/* YouTube ShortStopper - Shorts ページに重ねる UI
+   YouTube 側のスタイルを一切上書きしないよう、すべて .yss- 接頭辞で閉じる。 */
+
+.yss-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none; /* 子要素だけがクリックを受ける */
+  font-family: 'Roboto', 'Noto Sans JP', system-ui, sans-serif;
+  color: #fff;
+}
+
+.yss-root [hidden] {
+  display: none !important;
+}
+
+/* --------------------------------------------------- 今日の本数バッジ */
+
+.yss-badge {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(6px);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+}
+
+.yss-badge-count {
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.yss-badge-label {
+  opacity: 0.78;
+}
+
+.yss-badge.yss-off {
+  background: rgba(120, 60, 0, 0.62);
+}
+
+.yss-badge.yss-off::after {
+  content: '一時解除中';
+  margin-left: 6px;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------- 制限中ポップアップ
+
+   既定は右下。Shorts の視線は動画の中央〜右（いいね・コメントの列）にあり、
+   右上は YouTube 自身のヘッダー（アカウント・通知）と重なるため。
+   設定で右上（.yss-tr）にも寄せられる。 */
+
+.yss-notice {
+  position: absolute;
+  right: 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: min(348px, calc(100vw - 56px));
+  box-sizing: border-box;
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 106, 94, 0.42);
+  border-left: 5px solid #ff3d32;
+  background: rgba(18, 18, 20, 0.93);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.55);
+}
+
+.yss-notice.yss-br {
+  bottom: 32px;
+  top: auto;
+}
+
+/* 右上のときは YouTube のヘッダー（約 56px）を避ける */
+.yss-notice.yss-tr {
+  top: 84px;
+  bottom: auto;
+}
+
+/* アイコンと同じ意匠（止められた short）を小さく描く */
+.yss-notice-mark {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 34px;
+  margin-top: 2px;
+}
+
+.yss-notice-mark::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 16px;
+  height: 22px;
+  border-radius: 5px;
+  background: #ff3d32;
+}
+
+.yss-notice-mark::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 3px;
+  width: 30px;
+  height: 5px;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.yss-notice-text {
+  display: block;
+  min-width: 0;
+}
+
+.yss-notice-title {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.yss-notice-body {
+  display: block;
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  opacity: 0.78;
+}
+
+.yss-notice-meta {
+  display: block;
+  margin-top: 8px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #ffa79f;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 出っぱなしのときに連打されても分かるよう、毎回かけ直す */
+.yss-notice.yss-shake {
+  animation: yss-slide-in 220ms cubic-bezier(0.2, 0.9, 0.3, 1),
+    yss-nudge 260ms ease-out 220ms;
+}
+
+@keyframes yss-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+}
+
+@keyframes yss-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-7px);
+  }
+  65% {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yss-notice.yss-shake {
+    animation: yss-slide-in 120ms ease-out;
+  }
+}
+
+/* --------------------------------------------------- 停止カード */
+
+.yss-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(300px, 78vw);
+  box-sizing: border-box;
+  padding: 22px 20px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(16, 16, 18, 0.9);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  text-align: center;
+  animation: yss-pop 180ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes yss-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.97);
+  }
+}
+
+.yss-card.yss-hard {
+  border-color: rgba(255, 170, 90, 0.5);
+}
+
+.yss-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.yss-sub {
+  margin: 0 0 18px;
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0.72;
+  font-variant-numeric: tabular-nums;
+}
+
+.yss-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.yss-btn {
+  appearance: none;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 120ms ease, opacity 120ms ease;
+}
+
+.yss-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.yss-btn:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+/* 「もう一度見る」を主、「次へ進む」を従にする。惰性で押す側を目立たせない。 */
+.yss-again {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.yss-next {
+  background: transparent;
+  font-weight: 500;
+}
+
+.yss-leave {
+  display: block;
+  width: 100%;
+}
+
+.yss-link {
+  appearance: none;
+  margin-top: 12px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  opacity: 0.55;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.yss-link:hover {
+  opacity: 0.9;
+}
