@@ -14,13 +14,16 @@
   display: none !important;
 }
 
-/* --------------------------------------------------- 今日の本数バッジ */
+/* --------------------------------------------------- 今日の本数バッジ
+
+   右上に置く。画面中央だと動画本体に被るため。
+   YouTube 自身のヘッダー（約 56px）の下に入れ、右端は制限中ポップアップと
+   同じ 28px に揃える。 */
 
 .yss-badge {
   position: absolute;
   top: 72px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 28px;
   display: flex;
   align-items: baseline;
   gap: 3px;
@@ -82,9 +85,9 @@
   top: auto;
 }
 
-/* 右上のときは YouTube のヘッダー（約 56px）を避ける */
+/* 右上のときは YouTube のヘッダー（約 56px）と、その下の本数バッジを避ける */
 .yss-notice.yss-tr {
-  top: 84px;
+  top: 106px;
   bottom: auto;
 }
 
