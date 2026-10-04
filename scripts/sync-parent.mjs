@@ -3,17 +3,11 @@
  * origin/main に進め、そこで scripts/check.mjs を走らせる。
  *
  *   node scripts/sync-parent.mjs          手で叩く（どの worktree から叩いても本体が対象）
- *   node scripts/sync-parent.mjs --hook   Claude Code の PostToolUse / PostToolUseFailure から
+ *   node scripts/sync-parent.mjs --hook   .claude/settings.json の PostToolUse / PostToolUseFailure から
  *
  * worktree で直してマージしても、Chrome が見ている本体は pull するまで古いまま。
  * --hook のときは `gh pr merge` を打った呼び出しのあとだけ動き、結果を Claude に返す
  * （そのあと chrome://extensions の再読み込みを本人に頼むため）。
- *
- * hook の登録はコミットせず、本体の .claude/settings.local.json に手元だけで置く
- * （Desktop の worktree セッションも project の設定は本体から読む）。両方のイベントに同じものを置く:
- *
- *   "PostToolUse" / "PostToolUseFailure": [{ "matcher": "Bash|PowerShell", "hooks": [{
- *     "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/scripts/sync-parent.mjs\" --hook", "timeout": 60 }] }]
  * PostToolUseFailure にも置くのは、リモートのマージは通ったのにローカルの後処理で落ちる場合
  * （worktree では main が本体に checkout 済みで切り替えられない、など）も拾うため。
  * どちらで鳴っても、進めるかどうかは fetch した origin の実際の状態で決まる。
