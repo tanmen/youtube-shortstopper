@@ -72,7 +72,21 @@ Shorts を開くと、画面の**右上**に**今日見た本数**が小さく�
 | `src/popup.*`      | 本数の表示と 15 分の一時解除                               |
 | `src/options.*`    | 詳しい設定                                                 |
 | `scripts/check.mjs`| 読み込む前の整合性検査（`node scripts/check.mjs`）         |
+| `scripts/sync-parent.mjs` | Chrome が読む本体の checkout を origin/main に進めて検査する |
 | `scripts/make-icons.py` | アイコンの生成（`python scripts/make-icons.py`）      |
+
+### worktree で直したとき
+
+Chrome が読み込んでいるのは**clone した本体のフォルダ**で、`git worktree` で切った別の作業ツリー
+（`.claude/worktrees/` の下など）で直した分は、マージして本体を進めるまで Chrome に出ない。
+マージしたら、どの worktree からでも次を叩くと本体が origin/main に進み、本体側で `check.mjs` が走る。
+
+```
+node scripts/sync-parent.mjs
+```
+
+本体が `main` 以外にいる・追跡ファイルに変更がある・fast-forward で済まないときは、本体に触らず理由だけ出す。
+進めたあとは `chrome://extensions` の再読み込みと YouTube のタブの再読み込みが要る。
 
 ### 止め方の理屈
 
